@@ -55,8 +55,13 @@ export function getAllPosts(fields: string[] = []) {
 export const blogRouter = createRouter()
   .query("all", {
     async resolve() {
-      const blogs = getAllPosts(['title', 'time', 'intro', 'slug']);
-      return blogs;
+      const allPostSchema = z.array(z.object({
+        title: z.string(),
+        time: z.string(),
+        intro: z.string(),
+        slug: z.string(),
+      }));
+      return allPostSchema.parse(getAllPosts(['title', 'time', 'intro', 'slug']));
     },
   })
   .query("post", {
@@ -68,7 +73,6 @@ export const blogRouter = createRouter()
         intro: z.string(),
         content: z.string(),
       })
-
       const post = postSchema.parse(
         getPostBySlug(input, [ 
           'title',

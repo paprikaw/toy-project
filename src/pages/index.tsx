@@ -2,12 +2,8 @@ import { createSSGHelpers } from '@trpc/react/ssg';
 import { InferGetServerSidePropsType } from 'next';
 import { createContext } from '../server/router/context';
 import { appRouter } from "../server/router";
-import { PostType } from '../interface/blog';
 import DateFormatter from '../components/date-formatter';
 import { useRouter } from 'next/router';
-type Props = {
-  allPosts: PostType[]
-}
 const Home = ({ blogs }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <div className="min-h-screen flex flex-col">
@@ -25,15 +21,16 @@ const Home = ({ blogs }: InferGetServerSidePropsType<typeof getServerSideProps>)
 
 type blogProps = {
   title?: string,
-  time?: string,
+  time: string,
   intro?: string,
   slug?: string,
 }
+
 const BlogCard = (props: blogProps) => {
   const { title, time, intro, slug } = props
   const router = useRouter();
   return (
-    <div className=" flex flex-col hover:shadow-xl bg-white p-5 max-w-xl w-full  hover:cursor-pointer" onClick={(e) => {
+    <div className=" flex flex-col hover:shadow-xl bg-white p-5 max-w-xl w-full  hover:cursor-pointer" onClick={() => {
       router.push(`posts/${slug}`)
     }}>
       <div className="flex justify-between">
