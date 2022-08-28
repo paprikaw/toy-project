@@ -1,30 +1,9 @@
 import { createSSGHelpers } from '@trpc/react/ssg';
-import { InferGetServerSidePropsType } from 'next';
 import { createContext } from '@server/router/context';
 import { appRouter } from '@server/router';
-import { PostType } from '@interface/blog';
-import { useRouter } from 'next/router';
-import { getAllPosts, getPostBySlug } from '@server/router/blog';
-import markdownToHtml from "@utils/markdownToHtml";
+import { getAllPosts } from '@server/router/blog';
 import PostBody from '@components/post-body';
-import markdownStyles from './markdown-styles.module.css';
-type Props = {
-  post: PostType
-}
 
-const postDetail = ({ post }: Props) => {
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <div className="grow-0 flex flex-col items-center text-white p-20 justify-between gap-10 bg-slate-600">
-        <div className="text-4xl ">{post.title}</div>
-      </div>
-      <article>
-        <PostBody content={post.content} />
-      </article>
-    </div >
-  );
-};
 
 
 
@@ -34,7 +13,7 @@ type Params = {
   }
 }
 
-export async function getStaticProps({ params }: Params) {
+export const getStaticProps = async ({ params }: Params) => {
 
   const ssg = createSSGHelpers({
     router: appRouter,
@@ -54,9 +33,8 @@ export async function getStaticProps({ params }: Params) {
 }
 
 // Get page path
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const posts = getAllPosts(['slug'])
-
   return {
     paths: posts.map((post) => {
       return {
@@ -69,4 +47,23 @@ export async function getStaticPaths() {
   }
 }
 
+type Props = {
+  post: {
+    title: string,
+    content: string
+  }
+}
+const postDetail = ({ post }: Props) => {
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <div className="grow-0 flex flex-col items-center text-white p-20 justify-between gap-10 bg-slate-600">
+        <div className="text-4xl ">{post.title}</div>
+      </div>
+      <article>
+        <PostBody content={post.content} />
+      </article>
+    </div >
+  );
+};
 export default postDetail;

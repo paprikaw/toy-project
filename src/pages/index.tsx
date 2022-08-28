@@ -23,7 +23,14 @@ const Home = ({ blogs }: InferGetServerSidePropsType<typeof getServerSideProps>)
 };
 
 
-const BlogCard = ({ title, time, intro, slug }) => {
+type blogProps = {
+  title?: string,
+  time?: string,
+  intro?: string,
+  slug?: string,
+}
+const BlogCard = (props: blogProps) => {
+  const { title, time, intro, slug } = props
   const router = useRouter();
   return (
     <div className=" flex flex-col hover:shadow-xl bg-white p-5 max-w-xl w-full  hover:cursor-pointer" onClick={(e) => {
