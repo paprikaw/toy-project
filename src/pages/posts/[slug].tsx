@@ -1,11 +1,9 @@
 import { createSSGHelpers } from '@trpc/react/ssg';
 import { createContext } from '@server/router/context';
 import { appRouter } from '@server/router';
-import { getAllPosts } from '@server/router/blog';
-import PostBody from '@components/post-body';
-
-
-
+import { getSlugs, PostMeta } from '@server/router/utils';
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 type Params = {
   params: {
@@ -25,21 +23,23 @@ export const getStaticProps = async ({ params }: Params) => {
    * `prefetchQuery` does not return the result - if you need that, use `fetchQuery` instead.
    */
   const { post } = await ssg.fetchQuery('blog.post', params.slug);
+  const { content, meta } = post;
+  const mdxSource = await serialize(content);
   return {
     props: {
-      post: post
+      post: { meta, source: mdxSource },
     },
   }
 }
 
 // Get page path
 export const getStaticPaths = async () => {
-  const posts = getAllPosts(['slug'])
+  const slugs = getSlugs();
   return {
-    paths: posts.map((post) => {
+    paths: slugs.map((slug) => {
       return {
         params: {
-          slug: post.slug,
+          slug
         },
       }
     }),
@@ -47,22 +47,18 @@ export const getStaticPaths = async () => {
   }
 }
 
-type Props = {
-  post: {
-    title: string,
-    content: string
-  }
+type MDXpost = {
+  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>,
+  meta: PostMeta
 }
-const postDetail = ({ post }: Props) => {
+
+const postDetail = ({ post }: { post: MDXpost }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
       <div className="grow-0 flex flex-col items-center text-white p-20 justify-between gap-10 bg-slate-600">
-        <div className="text-4xl ">{post.title}</div>
+        <div className="text-4xl ">{post.meta.title}</div>
       </div>
-      <article>
-        <PostBody content={post.content} />
-      </article>
     </div >
   );
 };
