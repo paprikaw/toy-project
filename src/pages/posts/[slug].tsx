@@ -3,7 +3,7 @@ import { createContext } from '@server/router/context';
 import { appRouter } from '@server/router';
 import { getSlugs, PostMeta } from '@server/router/utils';
 import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 type Params = {
   params: {
@@ -56,8 +56,9 @@ const postDetail = ({ post }: { post: MDXpost }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="grow-0 flex flex-col items-center text-white p-20 justify-between gap-10 bg-slate-600">
-        <div className="text-4xl ">{post.meta.title}</div>
+      <div className='prose mx-auto relative w-full px-6 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-16 lg:pb-28'>
+        <h1>{post.meta.title}</h1>
+        <MDXRemote {...post.source} />
       </div>
     </div >
   );
