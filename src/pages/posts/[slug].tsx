@@ -67,8 +67,8 @@ const postDetail = ({ post }: { post: MDXpost }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className='prose  relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-20 lg:pb-28'>
-        <h1>{post.meta.title}</h1>
+      <div className='prose relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-20 lg:pb-28'>
+        <h1 className='text-indigo-600'>{post.meta.title}</h1>
         <MDXRemote {...post.source} />
       </div>
     </div >

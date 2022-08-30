@@ -4,15 +4,20 @@ import { createContext } from '../server/router/context';
 import { appRouter } from "../server/router";
 import DateFormatter from '../components/date-formatter';
 import { useRouter } from 'next/router';
+import DarkModeToggle from '@components/dark-mode-toggle';
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="grow-0 flex flex-col items-center text-white p-20 justify-between gap-10 bg-slate-600">
-        <div className="text-4xl ">{"Xu's blog"}</div>
-      </div>
-      <div className=" grow flex flex-col items-center p-20 2  gap-10 bg-slate-300 h-full">
-        {posts && posts.map((({ meta }, index) => (<BlogCard key={index} title={meta.title} time={meta.date} intro={meta.excerpt} slug={meta.slug} />))
-        )}
+    <div className="min-h-screen dark:bg-slate-700">
+      <div className="mx-auto md:max-w-3xl md:mx-auto lg:max-w-xl lg:pt-20 lg:pb-28">
+        <div className='flex justify-between items-center mb-10'>
+          <div className="text-4xl dark:font-white font-extrabold relative ">{"Xu's blog"}</div>
+          <DarkModeToggle />
+        </div>
+        <div className="grow flex flex-col gap-10 h-full items-center">
+          {posts && posts.map((({ meta }, index) => (<BlogContent key={index} title={meta.title} time={meta.date} intro={meta.excerpt} slug={meta.slug} />))
+          )}
+        </div>
       </div>
     </div >
   );
@@ -26,15 +31,17 @@ type blogProps = {
   slug?: string,
 }
 
-const BlogCard = (props: blogProps) => {
+const BlogContent = (props: blogProps) => {
   const { title, time, intro, slug } = props
   const router = useRouter();
   return (
-    <div className=" flex flex-col hover:shadow-xl bg-white p-5 max-w-xl w-full  hover:cursor-pointer" onClick={() => {
-      router.push(`posts/${slug}`)
-    }}>
-      <div className="flex justify-between">
-        <div className="text-xl capitalize max-w-xs truncate">{title}</div>
+    <div
+      className=" flex flex-col max-w-xl w-full  hover:cursor-pointer "
+      onClick={() => {
+        router.push(`posts/${slug}`)
+      }}>
+      <div className="flex flex-col justify-between">
+        <div className="text-3xl text-indigo-700 dark:text-white font-bold capitalize max-w-xs truncate">{title}</div>
         <div className="text-gray-400">
           <DateFormatter dateString={time} />
         </div>
