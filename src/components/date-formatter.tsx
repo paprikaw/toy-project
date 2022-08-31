@@ -6,7 +6,6 @@ type Props = {
 
 const DateFormatter = ({ dateString }: Props) => {
   const date = parseISO(dateString)
-  console.log(dateString);
   return <time dateTime={dateString}>{format(date, 'LLLL	d, yyyy')}</time>
 }
 
