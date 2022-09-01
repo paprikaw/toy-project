@@ -8,11 +8,6 @@ const toggleDarkMode = (isDarkMode: boolean) => {
     }
 }
 
-type Props = {
-    onClick?: () => void
-    isDarkMode: boolean
-}
-
 const DarkModeToggle = () => {
     // Get the dark mode from localstorage
     let darkMode = (typeof window !== 'undefined') && localStorage.getItem('darkMode') === 'true';
