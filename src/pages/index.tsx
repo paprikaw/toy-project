@@ -11,30 +11,30 @@ import DarkModeToggle from '@components/dark-mode-toggle';
 
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
-  // Get the dark mode from localstorage
-  let darkMode = (typeof window !== 'undefined') && localStorage.getItem('darkMode') === 'true';
+  // // Get the dark mode from localstorage
+  // let darkMode = (typeof window !== 'undefined') && localStorage.getItem('darkMode') === 'true';
 
-  // Setting the current theme
-  if (typeof window !== 'undefined') {
-    toggleDarkMode(darkMode);
-  }
+  // // Setting the current theme
+  // if (typeof window !== 'undefined') {
+  //   toggleDarkMode(darkMode);
+  // }
 
-  // When the user clicks the dark mode toggle, update the localStorage and set the state
-  const onDarkModeClick = () => {
-    if (typeof window !== 'undefined') {
-      if (!darkMode) {
-        console.log('light');
-        localStorage.setItem('darkMode', 'true');
-        toggleDarkMode(!darkMode);
-        darkMode = true;
-      } else {
-        console.log('dark');
-        localStorage.setItem('darkMode', 'false');
-        toggleDarkMode(!darkMode);
-        darkMode = false;
-      }
-    }
-  }
+  // // When the user clicks the dark mode toggle, update the localStorage and set the state
+  // const onDarkModeClick = () => {
+  //   if (typeof window !== 'undefined') {
+  //     if (!darkMode) {
+  //       console.log('light');
+  //       localStorage.setItem('darkMode', 'true');
+  //       toggleDarkMode(!darkMode);
+  //       darkMode = true;
+  //     } else {
+  //       console.log('dark');
+  //       localStorage.setItem('darkMode', 'false');
+  //       toggleDarkMode(!darkMode);
+  //       darkMode = false;
+  //     }
+  //   }
+  // }
 
 
   return (
@@ -42,7 +42,8 @@ const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
       <div className="mx-auto md:max-w-3xl md:mx-auto lg:max-w-xl lg:pt-20 lg:pb-28">
         <div className='flex justify-between items-center mb-10'>
           <div className="text-4xl dark:font-white font-extrabold relative ">{"Xu's blog"}</div>
-          <DarkModeToggle onClick={onDarkModeClick} isDarkMode={darkMode} />
+          {/* <DarkModeToggle onClick={onDarkModeClick} isDarkMode={darkMode} /> */}
+          <DarkModeToggle />
         </div>
         <div className="grow flex flex-col gap-10 h-full items-center">
           {posts && posts.map((({ meta }, index) => (<BlogContent key={index} title={meta.title} time={meta.date} intro={meta.excerpt} slug={meta.slug} />))
@@ -97,11 +98,11 @@ export async function getStaticProps() {
 }
 
 // set dark mode based on isDarkMode query param
-const toggleDarkMode = (isDarkMode: boolean) => {
-  if (isDarkMode) {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
-}
+// const toggleDarkMode = (isDarkMode: boolean) => {
+//   if (isDarkMode) {
+//     document.documentElement.classList.add('dark');
+//   } else {
+//     document.documentElement.classList.remove('dark');
+//   }
+// }
 export default Home;
