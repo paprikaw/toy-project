@@ -67,8 +67,8 @@ type MDXpost = {
 const postDetail = ({ post }: { post: MDXpost }) => {
 
   return (
-    <div className="min-h-screen flex flex-col dark:bg-slate-800">
-      <div className='prose dark:prose-invert dark:bg-slate-800 relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-20 lg:pb-28'>
+    <div className="min-h-screen flex flex-col dark:bg-slate-800 duration-100">
+      <div className='prose dark:prose-invert dark:bg-slate-800  duration-100 relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-20 lg:pb-28'>
         <div className='flex justify-between items-center'>
           <h1 className='dark:text-blue-400 text-indigo-800'>{post.meta.title}</h1>
           <DarkModeToggle />
