@@ -12,10 +12,10 @@ import DarkModeToggle from '@components/dark-mode-toggle';
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
-    <div className="min-h-screen duration-100 dark:bg-slate-700 dark:duration-100">
+    <div className="min-h-screen duration-100 dark:bg-slate-800 dark:duration-100">
       <div className="mx-auto md:max-w-3xl md:mx-auto lg:max-w-xl lg:pt-20 lg:pb-28">
         <div className='flex justify-between items-center mb-10'>
-          <div className="text-4xl dark:font-white font-extrabold relative ">{"Xu's blog"}</div>
+          <div className="text-4xl dark:text-white font-extrabold relative ">{"Xu's blog"}</div>
           <DarkModeToggle />
         </div>
         <div className="grow flex flex-col gap-10 h-full items-center">
@@ -45,7 +45,7 @@ const BlogContent = (props: blogProps) => {
         router.push(`posts/${slug}`)
       }}>
       <div className="flex flex-col justify-between">
-        <div className="text-3xl text-indigo-700 dark:text-white font-bold capitalize max-w-xs truncate">{title}</div>
+        <div className="text-3xl text-indigo-700 dark:text-blue-400 font-bold capitalize max-w-xs truncate">{title}</div>
         <div className="text-gray-400">
           <DateFormatter dateString={time} />
         </div>
