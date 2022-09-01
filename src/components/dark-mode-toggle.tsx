@@ -21,12 +21,10 @@ const DarkModeToggle = () => {
     const onDarkModeClick = () => {
         if (typeof window !== 'undefined') {
             if (!darkMode) {
-                console.log('light');
                 localStorage.setItem('darkMode', 'true');
                 toggleDarkMode(!darkMode);
                 darkMode = true;
             } else {
-                console.log('dark');
                 localStorage.setItem('darkMode', 'false');
                 toggleDarkMode(!darkMode);
                 darkMode = false;

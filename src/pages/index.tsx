@@ -13,13 +13,13 @@ const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <div className="min-h-screen duration-100 dark:bg-slate-800 dark:duration-100">
-      <div className="mx-auto md:max-w-3xl md:mx-auto lg:max-w-xl lg:pt-20 lg:pb-28">
+      <div className="mx-auto max-w-xl pt-10 pb-28 px-5">
         <div className='flex justify-between items-center mb-10'>
           <div className="text-4xl dark:text-white font-extrabold relative ">{"Xu's blog"}</div>
           <DarkModeToggle />
         </div>
         <div className="grow flex flex-col gap-10 h-full items-center">
-          {posts && posts.map((({ meta }, index) => (<BlogContent key={index} title={meta.title} time={meta.date} intro={meta.excerpt} slug={meta.slug} />))
+          {posts && posts.map((({ meta }, index) => (<BlogContent key={index} title={meta.title} time={meta.date} excerpt={meta.excerpt} slug={meta.slug} />))
           )}
         </div>
       </div>
@@ -31,12 +31,12 @@ const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 type blogProps = {
   title?: string,
   time: string,
-  intro?: string,
+  excerpt?: string,
   slug?: string,
 }
 
 const BlogContent = (props: blogProps) => {
-  const { title, time, intro, slug } = props
+  const { title, time, excerpt, slug } = props
   const router = useRouter();
   return (
     <div
@@ -45,12 +45,11 @@ const BlogContent = (props: blogProps) => {
         router.push(`posts/${slug}`)
       }}>
       <div className="flex flex-col justify-between">
-        <div className="text-3xl text-indigo-700 dark:text-blue-400 font-bold capitalize max-w-xs truncate">{title}</div>
-        <div className="text-gray-400">
+        <div className="text-3xl text-indigo-700 dark:text-blue-400 font-bold capitalize truncate mb-2">{title}</div> <div className="dark:text-white text-xs">
           <DateFormatter dateString={time} />
         </div>
       </div>
-      <div className="text-gray-500">{intro}</div>
+      <div className="dark:text-white text-lg">{excerpt}</div>
     </div>
   )
 }

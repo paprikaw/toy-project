@@ -9,6 +9,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 import "highlight.js/styles/atom-one-dark.css";
 import DarkModeToggle from '@components/dark-mode-toggle';
+import { useRouter } from 'next/router';
 type Params = {
   params: {
     slug: string
@@ -64,18 +65,25 @@ type MDXpost = {
   meta: PostMeta
 }
 
-const postDetail = ({ post }: { post: MDXpost }) => {
-
+const PostDetail = ({ post }: { post: MDXpost }) => {
+  const router = useRouter();
   return (
     <div className="min-h-screen flex flex-col dark:bg-slate-800 duration-100">
-      <div className='prose dark:prose-invert dark:bg-slate-800  duration-100 relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-20 lg:pb-28'>
-        <div className='flex justify-between items-center'>
-          <h1 className='dark:text-blue-400 text-indigo-800'>{post.meta.title}</h1>
+      <div className='prose dark:prose-invert dark:bg-slate-800  duration-100 relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-10 lg:pb-28 '>
+        <div className='flex justify-between items-center mb-10'>
+          <div
+            className="text-2xl  dark:text-white font-extrabold relative hover:cursor-pointer"
+            onClick={() => {
+              router.push(`/`)
+            }}
+          >
+            {"Xu's Blog"}</div>
           <DarkModeToggle />
         </div>
+        <h1 className='dark:text-blue-400 text-indigo-800'>{post.meta.title}</h1>
         <MDXRemote {...post.source} />
       </div>
     </div >
   );
 };
-export default postDetail;
+export default PostDetail;
