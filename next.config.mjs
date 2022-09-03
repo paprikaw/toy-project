@@ -1,5 +1,4 @@
-import {env} from "./src/env/server.mjs";
-
+import NextBundleAnalyzer from "@next/bundle-analyzer";
 /**
  * Don't be scared of the generics here.
  * All they do is to give us autocompletion when using this.
@@ -11,8 +10,13 @@ import {env} from "./src/env/server.mjs";
 function defineNextConfig(config) {
   return config;
 }
-
-export default defineNextConfig({
-  reactStrictMode: true,
-  swcMinify: true,
+const withBundleAnalyzer = NextBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
 });
+
+export default withBundleAnalyzer(
+  defineNextConfig({
+    reactStrictMode: true,
+    swcMinify: true,
+  })
+);

@@ -56,7 +56,7 @@ const BlogContent = (props: blogProps) => {
   )
 }
 
-export async function getStaticProps(Props: any) {
+export async function getStaticProps() {
   const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContext(),

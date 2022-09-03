@@ -12,6 +12,7 @@
     "debug": "NODE_OPTIONS='--inspect' next dev"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^12.2.5",
     "@prisma/client": "^4.2.1",
     "@tailwindcss/typography": "^0.5.4",
     "@trpc/client": "^9.27.0",
