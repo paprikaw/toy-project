@@ -6,7 +6,7 @@ import DateFormatter from '../components/date-formatter';
 import { useRouter } from 'next/router';
 import DarkModeToggle from '@components/dark-mode-toggle';
 import { useDarkMode } from '@utils/customHook';
-
+import Head from 'next/head'
 
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
@@ -15,6 +15,11 @@ const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     shouldDisplay &&
     <div className="min-h-screen duration-100 dark:bg-slate-800 dark:duration-100">
+      <Head>
+        <title>{"Xu's Blog"}</title>
+        <meta name='description' content='Welcome to my secret place! I post random thoughts and tech rants here.' />
+        <meta name='lang' content='Welcome to my secret place! I post random thoughts and tech rants here.' />
+      </Head>
       < div className="mx-auto max-w-xl pt-10 pb-28 px-5" >
         <div className='flex justify-between items-center mb-10'>
           <div className="text-4xl dark:text-white font-extrabold relative ">{"Xu's blog"}</div>

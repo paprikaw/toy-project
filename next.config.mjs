@@ -18,5 +18,6 @@ export default withBundleAnalyzer(
   defineNextConfig({
     reactStrictMode: true,
     swcMinify: true,
+    productionBrowserSourceMaps: true,
   })
 );
