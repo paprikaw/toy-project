@@ -8,15 +8,10 @@ const toggleDarkMode = (isDarkMode: boolean) => {
     }
 }
 
-const DarkModeToggle = () => {
-    // Get the dark mode from localstorage
-    let darkMode = (typeof window !== 'undefined') && localStorage.getItem('darkMode') === 'true';
-
-    // Setting the current theme
-    if (typeof window !== 'undefined') {
-        toggleDarkMode(darkMode);
-    }
-
+type ToggleProps = {
+    darkMode: boolean,
+}
+const DarkModeToggle = ({ darkMode }: ToggleProps) => {
     // When the user clicks the dark mode toggle, update the localStorage and set the state
     const onDarkModeClick = () => {
         if (typeof window !== 'undefined') {

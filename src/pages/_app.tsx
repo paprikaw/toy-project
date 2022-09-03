@@ -4,10 +4,20 @@ import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import "../styles/globals.css";
+import Script from "next/script";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
+
+  if (typeof window !== 'undefined') {
+    const theme = localStorage.getItem("darkMode") === "true";
+    if (theme) {
+      document.documentElement.classList.add("dark");
+    }
+  }
   return (
-    <Component {...pageProps} />
+    <>
+      <Component {...pageProps} />
+    </>
   )
 };
 

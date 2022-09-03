@@ -10,6 +10,7 @@ import rehypeSlug from 'rehype-slug'
 import "highlight.js/styles/atom-one-dark.css";
 import DarkModeToggle from '@components/dark-mode-toggle';
 import { useRouter } from 'next/router';
+import { useDarkMode } from '@utils/customHook';
 type Params = {
   params: {
     slug: string
@@ -67,7 +68,9 @@ type MDXpost = {
 
 const PostDetail = ({ post }: { post: MDXpost }) => {
   const router = useRouter();
+  const { darkMode, shouldDisplay } = useDarkMode();
   return (
+    shouldDisplay &&
     <div className="min-h-screen flex flex-col dark:bg-slate-800 duration-100">
       <div className='prose dark:prose-invert dark:bg-slate-800  duration-100 relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-10 lg:pb-28 '>
         <div className='flex justify-between items-center mb-10'>
@@ -78,7 +81,7 @@ const PostDetail = ({ post }: { post: MDXpost }) => {
             }}
           >
             {"Xu's Blog"}</div>
-          <DarkModeToggle />
+          <DarkModeToggle darkMode={darkMode} />
         </div>
         <h1 className='dark:text-blue-400 text-indigo-800'>{post.meta.title}</h1>
         <MDXRemote {...post.source} />

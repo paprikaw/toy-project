@@ -5,24 +5,26 @@ import { appRouter } from "../server/router";
 import DateFormatter from '../components/date-formatter';
 import { useRouter } from 'next/router';
 import DarkModeToggle from '@components/dark-mode-toggle';
-
-
+import { useDarkMode } from '@utils/customHook';
 
 
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
+  const { darkMode, shouldDisplay } = useDarkMode();
+
   return (
+    shouldDisplay &&
     <div className="min-h-screen duration-100 dark:bg-slate-800 dark:duration-100">
-      <div className="mx-auto max-w-xl pt-10 pb-28 px-5">
+      < div className="mx-auto max-w-xl pt-10 pb-28 px-5" >
         <div className='flex justify-between items-center mb-10'>
           <div className="text-4xl dark:text-white font-extrabold relative ">{"Xu's blog"}</div>
-          <DarkModeToggle />
+          <DarkModeToggle darkMode={darkMode} />
         </div>
         <div className="grow flex flex-col gap-10 h-full items-center">
           {posts && posts.map((({ meta }, index) => (<BlogContent key={index} title={meta.title} time={meta.date} excerpt={meta.excerpt} slug={meta.slug} />))
           )}
         </div>
-      </div>
+      </div >
     </div >
   );
 };
@@ -54,7 +56,7 @@ const BlogContent = (props: blogProps) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(Props: any) {
   const ssg = createSSGHelpers({
     router: appRouter,
     ctx: await createContext(),
