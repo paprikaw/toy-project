@@ -10,10 +10,13 @@ import Head from 'next/head'
 
 const Home = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
-  const { darkMode, shouldDisplay } = useDarkMode();
+  const { darkMode, isDarkModeLoading } = useDarkMode();
+
+  if (isDarkModeLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    shouldDisplay &&
     <div className="min-h-screen duration-100 dark:bg-slate-800 dark:duration-100">
       <Head>
         <title>{"Xu's Blog"}</title>
@@ -47,7 +50,7 @@ const BlogContent = (props: blogProps) => {
   const router = useRouter();
   return (
     <div
-      className=" flex flex-col max-w-xl w-full  hover:cursor-pointer "
+      className=" flex flex-col max-w-xl w-full  hover:cursor-pointer h-100 "
       onClick={() => {
         router.push(`posts/${slug}`)
       }}>

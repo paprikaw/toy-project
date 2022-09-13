@@ -11,6 +11,8 @@ import "highlight.js/styles/atom-one-dark.css";
 import DarkModeToggle from '@components/dark-mode-toggle';
 import { useRouter } from 'next/router';
 import { useDarkMode } from '@utils/customHook';
+import { useEffect } from 'react';
+
 type Params = {
   params: {
     slug: string
@@ -68,10 +70,31 @@ type MDXpost = {
 
 const PostDetail = ({ post }: { post: MDXpost }) => {
   const router = useRouter();
-  const { darkMode, shouldDisplay } = useDarkMode();
+  const { darkMode, isDarkModeLoading } = useDarkMode();
+
+  useEffect(() => {
+
+    document.addEventListener('scroll', () => {
+      const { scrollHeight, scrollTop } = document.documentElement;
+      const scrollPercentage = (scrollTop / (scrollHeight - window.innerHeight)) * 100 + '%';
+
+      const progressBar = document.querySelector('#progress-bar') as HTMLElement | null;
+
+      if (progressBar !== null) {
+        progressBar.style.setProperty('width', scrollPercentage);
+      }
+
+    });
+  }, [])
+
+  if (isDarkModeLoading) {
+    return <div>Loading...</div>;
+  }
+
+
   return (
-    shouldDisplay &&
     <div className="min-h-screen flex flex-col dark:bg-slate-800 duration-100">
+      <div className='w-0 z-10 h-1 bg-indigo-800 dark:bg-blue-400 fixed' id='progress-bar' />
       <div className='prose dark:prose-invert dark:bg-slate-800  duration-100 relative w-full px-12 py-12 bg-white shadow-xl shadow-slate-700/10 ring-1 ring-gray-900/5 md:max-w-3xl md:mx-auto lg:max-w-4xl lg:pt-10 lg:pb-28 '>
         <div className='flex justify-between items-center mb-10'>
           <div
