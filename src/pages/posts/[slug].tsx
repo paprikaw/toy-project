@@ -12,6 +12,7 @@ import DarkModeToggle from '@components/dark-mode-toggle';
 import { useRouter } from 'next/router';
 import { useDarkMode } from '@utils/customHook';
 import { useEffect } from 'react';
+import { getEventListeners } from 'events';
 
 type Params = {
   params: {
@@ -72,20 +73,21 @@ const PostDetail = ({ post }: { post: MDXpost }) => {
   const router = useRouter();
   const { darkMode, isDarkModeLoading } = useDarkMode();
 
+  // Adding event listener for prgression bar
   useEffect(() => {
-
-    document.addEventListener('scroll', () => {
+    const updateProgressBar = () => {
       const { scrollHeight, scrollTop } = document.documentElement;
       const scrollPercentage = (scrollTop / (scrollHeight - window.innerHeight)) * 100 + '%';
-
       const progressBar = document.querySelector('#progress-bar') as HTMLElement | null;
 
       if (progressBar !== null) {
         progressBar.style.setProperty('width', scrollPercentage);
       }
+    };
 
-    });
-  }, [])
+    document.addEventListener('scroll', updateProgressBar);
+    return () => { document.removeEventListener('scroll', updateProgressBar) }
+  }, []);
 
   if (isDarkModeLoading) {
     return <div>Loading...</div>;
